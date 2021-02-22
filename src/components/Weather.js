@@ -5,7 +5,7 @@ const api = {
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
-function DataFetch() {
+function Weather() {
 
     const[weather, setWeather] = useState({})
     const[current, setCurrent] = useState("")
@@ -34,33 +34,65 @@ function DataFetch() {
         }
     }
 
+    const getDate = info => {
+        let weekDayList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        let weekday = weekDayList[info.getDay()];
+        let date = info.getDate();
+        let month = monthList[info.getMonth()];
+        let year = info.getFullYear();
+
+        return `${weekday}, ${month} ${date}, ${year}`
+    }
+
+    const handleImage = () => {
+        console.log("hi");
+        if (weather.weather[0].main == "clouds") {
+            return "http://openweathermap.org/img/wn/10d@2x.png";
+        }
+    }
+
     return(
 
-        <div>
-            <input type="text" 
-            value={current} 
-            placeholder="Search Location..." 
-            onChange={
-                (e) => {
-                setCurrent(e.target.value)
+        <div className="background">
+
+            <input type="text"
+                className="searchbar" 
+                value={current} 
+                placeholder="Search Location..." 
+                onChange={
+                    (e) => {
+                    setCurrent(e.target.value)
+                    }
                 }
-            }
-            onKeyPress={handleEnter}
+                onKeyPress={handleEnter}
             />
-            <button onClick={handleClick}>Submit</button>
+
+            <button onClick={handleClick} className="submitButton">Get Weather!</button>
 
             {(typeof weather.main != "undefined") ? (
 
-                <h1>{weather.name}, {weather.sys.country}, {weather.weather[0].main}, {Math.round(weather.main.temp)}, TEST</h1>
+                <div className="output">
+                <br />
+                <div>Date: {getDate(new Date())}</div>
+                <br />
+                <div>Location: {weather.name}, {weather.sys.country}</div> 
+                <div>Condition: {weather.weather[0].main}</div>
+                <div>Temperature: {Math.round(weather.main.temp)}°C feels like {Math.round(weather.main.feels_like)}°C</div>
+                </div>
+
+
 
                 //console.log(weather.name), //Waterloo
                 //console.log(weather.sys.country), //Canada
                 //console.log(weather.weather[0].main), //Cloudy
                 //console.log(Math.round(weather.main.temp)) //Temp
-            ) : ('')}
+
+            ) : <div className="invalidInput"><br />Sorry, Please Enter a Valid City</div>}
         </div>
 
     )
 }
 
-export default DataFetch
+export default Weather

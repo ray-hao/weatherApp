@@ -1,11 +1,12 @@
 import './App.css';
 import React from "react"
-import DataFetch from './components/Weather';
+import Weather from './components/Weather';
+import "./style.css"
 
 function App() {
   return (
     <div className="App">
-      <DataFetch />      
+      <Weather />     
     </div>
   );
 }
