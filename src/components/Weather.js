@@ -51,7 +51,7 @@ function DataFetch() {
 
             {(typeof weather.main != "undefined") ? (
 
-                <h1>{weather.name}, {weather.sys.country}, {weather.weather[0].main}, {Math.round(weather.main.temp)}</h1>
+                <h1>{weather.name}, {weather.sys.country}, {weather.weather[0].main}, {Math.round(weather.main.temp)}, TEST</h1>
 
                 //console.log(weather.name), //Waterloo
                 //console.log(weather.sys.country), //Canada
