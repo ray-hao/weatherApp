@@ -7,10 +7,12 @@ const api = {
 
 function Weather() {
 
+    // useState hooks
     const[weather, setWeather] = useState({})
     const[current, setCurrent] = useState("")
     const[query, setQuery] = useState("Waterloo")
 
+    // useEffect hook to fetch data and update query whenever our query changes
     useEffect(() => {
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(res => res.json())
@@ -20,12 +22,14 @@ function Weather() {
             })
     }, [query])
 
+    // for submit button
     const handleClick = () => {
         if (current != "") {
         setQuery(current)
         }
     }
 
+    // for regualr textbox
     const handleEnter = (e) => {
         if (current != "") {
             if (e.key === "Enter") {
@@ -34,6 +38,7 @@ function Weather() {
         }
     }
 
+    // gets date for output
     const getDate = info => {
         let weekDayList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -44,13 +49,6 @@ function Weather() {
         let year = info.getFullYear();
 
         return `${weekday}, ${month} ${date}, ${year}`
-    }
-
-    const handleImage = () => {
-        console.log("hi");
-        if (weather.weather[0].main == "clouds") {
-            return "http://openweathermap.org/img/wn/10d@2x.png";
-        }
     }
 
     return(
@@ -71,6 +69,7 @@ function Weather() {
 
             <button onClick={handleClick} className="submitButton">Get Weather!</button>
 
+             // assures the data actually exists
             {(typeof weather.main != "undefined") ? (
 
                 <div className="output">
